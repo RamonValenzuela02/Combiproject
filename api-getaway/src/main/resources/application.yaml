@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: api-getaway
+  config:
+    import: 'optional:configserver:http://localhost:8088'
