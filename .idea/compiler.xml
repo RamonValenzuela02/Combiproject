@@ -8,7 +8,9 @@
         <outputRelativeToContentRoot value="true" />
         <module name="config-server" />
         <module name="api-getaway" />
+        <module name="payment-service" />
         <module name="service-registry" />
+        <module name="notification-service" />
         <module name="booking-service" />
       </profile>
     </annotationProcessing>
@@ -22,6 +24,8 @@
       <module name="booking-service" options="-parameters" />
       <module name="config-server" options="-parameters" />
       <module name="employee-service" options="-parameters" />
+      <module name="notification-service" options="-parameters" />
+      <module name="payment-service" options="-parameters" />
       <module name="service-registry" options="-parameters" />
     </option>
   </component>

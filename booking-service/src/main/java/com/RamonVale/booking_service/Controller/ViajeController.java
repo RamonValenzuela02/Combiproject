@@ -24,10 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class ViajeController {
   private IViajeService viajeService;
 
-  @GetMapping
-  public Page<Viaje> getViajes(@PageableDefault(page=0, size=10) Pageable pageable) {
-    return viajeService.getViajes(pageable);
-  }
+//  @GetMapping
+//  public Page<ViajeResponse> getViajes(@PageableDefault(page=0, size=10) Pageable pageable) {
+//    return viajeService.getViajes(pageable);
+//  }
 
   @GetMapping("/{id}")
   public List<ViajeResponse> getViajesPorId (@PathVariable Long id) {
@@ -36,7 +36,6 @@ public class ViajeController {
 
   @GetMapping("/{id}/seats")
   public List<AsientoResponse> getAsientos(@PathVariable Long id, @RequestParam String origen, @RequestParam String destino) {
-    //TODO falta mejorar la logica de esta rta
     return viajeService.getAsientos(id);
   }
 
@@ -45,19 +44,16 @@ public class ViajeController {
     return viajeService.create(viaje);
   }
 
-  //todo pensar otra opcion para la ruta no me gusta que este el verbo
   @PutMapping("/{id}/start")
   public ViajeResponse startViaje(@PathVariable Long id) {
     return viajeService.arrancarViaje(id);
   }
 
-  //todo pensar otra opcion para la ruta no me gusta que este el verbo
   @PutMapping("/{id}/end")
-  public ViajeResponse startViaje(@PathVariable Long id) {
+  public ViajeResponse endViaje(@PathVariable Long id) {
     return viajeService.terminarViaje(id);
   }
 
-  //todo pensar otra opcion para la ruta no me gusta que este el verbo
   @PutMapping("/{id}/cancel")
   public ViajeResponse cancelViaje(@PathVariable Long id) {
     return viajeService.cancelarViaje(id);

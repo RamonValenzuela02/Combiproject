@@ -1,4 +1,10 @@
 package com.RamonVale.booking_service.Dto.Usuario;
 
-public record UsuarioRequest() {
+import java.time.LocalDate;
+
+public record UsuarioRequest(String nombre,
+                             String apellido,
+                             String email,
+                             String telefono,
+                             LocalDate fechaNacimiento) {
 }

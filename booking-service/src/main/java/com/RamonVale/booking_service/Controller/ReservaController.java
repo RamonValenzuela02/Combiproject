@@ -21,10 +21,10 @@ public class ReservaController {
   @Autowired
   private IReservaService reservaService;
 
-  @GetMapping("/me")
-  public Page<ReservaResponse> getReservas(@PageableDefault(page=0, size=10) Pageable pageable) {
-    return reservaService.findAll(pageable);
-  }
+//  @GetMapping("/me")
+//  public Page<ReservaResponse> getReservas(@PageableDefault(page=0, size=10) Pageable pageable) {
+//    return reservaService.findAll(pageable);
+//  }
 
   @GetMapping("/{id}")
   public ReservaResponse getReserva(@PathVariable Long id) {

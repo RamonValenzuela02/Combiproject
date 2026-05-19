@@ -4,15 +4,20 @@ import com.RamonVale.booking_service.Domain.Asiento.Asiento;
 import com.RamonVale.booking_service.Domain.Automovil.Automovil;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class Viaje {
   private Long id;
   private EstadoViaje estadoViaje;
   private LocalDateTime fechaSalida;
   private TipoDeViaje tipoDeViaje;
-  private List<Asiento> asientos;
-  private List<Tramo> tramos;
+  private List<Asiento> asientos = new ArrayList<>();
+  private List<Tramo> tramosCompletos = new ArrayList<>();;
   private Automovil automovil;
 
   public Viaje(TipoDeViaje tipoDeViaje, LocalDateTime fechaSalida, Automovil automovil) {
@@ -23,10 +28,18 @@ public class Viaje {
     generarAsientos();
   }
 
+  public void realizoTramo(Tramo tramo) {
+    tramosCompletos.add(tramo);
+  }
+
+  public List<Asiento> getAientosLibres() {
+    return asientos.stream()
+      .filter(Asiento::esLibre)
+      .toList();
+  }
+
   public double precioViajeCompleto() {
-    return tramos.stream()
-      .mapToDouble(tramo -> tramo.getValor())
-      .sum();
+    return tipoDeViaje.getPrecioFinal();
   }
 
   public double tiempoRestanteEnHorasAntesDePartida(LocalDateTime tiempo) {

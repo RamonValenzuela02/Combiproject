@@ -23,10 +23,10 @@ public class UsuarioController {
   @Autowired
   private IUsuarioService usuarioServie;
 
-  @GetMapping
-  public Page<UsuarioResponse> getUsuarios(@PageableDefault(page=0, size= 10) Pageable pageable){
-    return usuarioServie.findAll(pageable);
-  }
+//  @GetMapping
+//  public Page<UsuarioResponse> getUsuarios(@PageableDefault(page=0, size= 10) Pageable pageable){
+//    return usuarioServie.findAll(pageable);
+//  }
 
   @GetMapping("/{id}")
   public UsuarioResponse getUsuario(@PathVariable Long id){

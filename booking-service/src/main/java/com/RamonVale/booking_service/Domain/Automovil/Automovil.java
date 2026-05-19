@@ -12,4 +12,10 @@ public class Automovil {
   private Chofer chofer;
   private int cantidadDeAsientos;
 
+  public Automovil(String patente, Chofer chofer, int cantidadDeAsientos) {
+    this.patente = patente;
+    this.chofer = chofer;
+    this.cantidadDeAsientos = cantidadDeAsientos;
+  }
+
 }

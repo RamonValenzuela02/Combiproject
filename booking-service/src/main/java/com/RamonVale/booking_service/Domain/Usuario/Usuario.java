@@ -10,6 +10,5 @@ public class Usuario {
   private String email;
   private String telefono;
   private LocalDate fechaNacimiento;
-  private LocalDateTime ultimoLogin;
   private int edad;
 }
