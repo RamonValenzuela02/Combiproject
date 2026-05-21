@@ -1,4 +1,4 @@
-package com.RamonVale.payment_service.Domain;
+package com.RamonVale.payment_service.Domain.Pago;
 
 public enum EstadoPago {
   PENDIENTE_WEBHOOK,
