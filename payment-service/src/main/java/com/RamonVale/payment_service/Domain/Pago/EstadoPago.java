@@ -1,9 +1,11 @@
 package com.RamonVale.payment_service.Domain.Pago;
 
 public enum EstadoPago {
-  PENDIENTE_WEBHOOK,
+  PENDIENTE,
+  EN_PROCESO,
   APROBADO,
   RECHAZADO,
+  CANCELADO,
   REEMBOLSADO,
   FALLIDO
 }
