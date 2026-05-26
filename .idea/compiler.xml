@@ -13,11 +13,11 @@
         <module name="financial-service" />
         <module name="service-registry" />
         <module name="notification-service" />
-        <module name="wallet-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="employee-service" target="21" />
+      <module name="wallet-service" target="21" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

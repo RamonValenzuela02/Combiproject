@@ -1,4 +1,4 @@
-package com.RamonVale.financial_service.Domain;
+package com.RamonVale.financial_service.Domain.ledger;
 
 import java.math.BigDecimal;
 import lombok.Getter;

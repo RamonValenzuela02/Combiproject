@@ -1,6 +1,6 @@
 package com.RamonVale.financial_service.Controller;
 
-import com.RamonVale.financial_service.Domain.ReconciliationReport;
+import com.RamonVale.financial_service.Domain.report.ReconciliationReport;
 import com.RamonVale.financial_service.Service.ReconciliationReportService;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
