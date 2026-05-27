@@ -15,8 +15,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+@Repository
 public class ReconciliationReportService {
 
   private static final Logger log = LoggerFactory.getLogger(ReconciliationReportService.class);
@@ -42,7 +44,6 @@ public class ReconciliationReportService {
     reconcileDate(yesterday);
   }
 
-
   @Transactional
   public ReconciliationReport reconcileDate(LocalDate date) {
 
@@ -51,10 +52,10 @@ public class ReconciliationReportService {
     Instant endOfDay   = date.plusDays(1).atStartOfDay(ZoneOffset.UTC).toInstant();
 
     // Sumar todos los DEBIT y CREDIT del ledger para esa fecha.
-    BigDecimal totalDebits = financialTransactionRepo.sumByEntryTypeAndPeriod(
+    BigDecimal totalDebits = financialTransactionRepo.sumEntriesByTypeAndPeriod(
       EntryType.DEBIT, startOfDay, endOfDay
     );
-    BigDecimal totalCredits = financialTransactionRepo.sumByEntryTypeAndPeriod(
+    BigDecimal totalCredits = financialTransactionRepo.sumEntriesByTypeAndPeriod(
       EntryType.CREDIT, startOfDay, endOfDay
     );
 

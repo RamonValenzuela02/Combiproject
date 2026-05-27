@@ -19,15 +19,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "LedgerEntries")
+@Table(name = "ledger_entries")
 public class LedgerEntry {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
-
-  // Agrupa las 3 entradas del mismo viaje (o reversal).
-//  @Column(name = "transaction_id", nullable = false)
-//  private UUID transactionId;
 
   // A qué cuenta afecta esta entrada.
   @Column(name = "account_id", nullable = false)

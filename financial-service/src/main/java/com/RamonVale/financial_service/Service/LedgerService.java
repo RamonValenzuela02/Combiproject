@@ -163,8 +163,12 @@ public class LedgerService {
       .orElseGet(() -> accountRepo.save(new Account(ownerId, type)));
   }
 
-  private FinancialTransaction handleRetryFailure(String reservaId, Exception e) {
-    log.error("Se agotaron los reintentos para reservaId={}", reservaId, e);
-    throw new RuntimeException("No se pudo procesar el viaje después de 3 intentos", e);
+  private FinancialTransaction handleRetryFailure( String reservaId,
+                                                   String passengerId,
+                                                   String driverId,
+                                                   BigDecimal totalAmount,
+                                                   Throwable t) {
+    log.error("Se agotaron los reintentos para reservaId={}", reservaId, t);
+    throw new RuntimeException("No se pudo procesar el viaje después de varios intentos", t);
   }
 }

@@ -2,6 +2,8 @@ package com.RamonVale.financial_service.ConcurrencyTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.RamonVale.financial_service.Domain.ledger.Account;
+import com.RamonVale.financial_service.Domain.ledger.AccountType;
 import com.RamonVale.financial_service.Repository.AccountRepository;
 import com.RamonVale.financial_service.Service.LedgerService;
 import java.math.BigDecimal;
@@ -58,6 +60,16 @@ public class LedgerServiceConcurrencyTest {
   @Test
   @DisplayName("El ledger siempre cuadra: SUM(débitos) == SUM(créditos)")
   void ledgerAlwaysBalances() {
+    int concurrentPayments = 20;
+    BigDecimal tripAmount = new BigDecimal("10000");
+
+    // Crear y fondear cuenta del pasajero
+    Account passenger = new Account(passengerId, AccountType.PASSENGER);
+    passenger.credit(
+      tripAmount.multiply(BigDecimal.valueOf(concurrentPayments))
+    );
+    accountRepo.save(passenger);
+
     // Procesar 20 viajes distintos
     for (int i = 0; i < 20; i++) {
       var tx = ledgerService.processTrip(
@@ -72,7 +84,6 @@ public class LedgerServiceConcurrencyTest {
     }
   }
 
-  // ─────────────────────────────────────────────────────────────────────────
 
   @Test
   @DisplayName("Concurrencia: 20 viajes simultáneos no producen balance incorrecto")
@@ -81,6 +92,14 @@ public class LedgerServiceConcurrencyTest {
     BigDecimal fareEach  = new BigDecimal("1000.00");
     BigDecimal expected  = fareEach.multiply(BigDecimal.valueOf(threadCount))
       .multiply(new BigDecimal("0.50"));
+
+    // Fondear pasajero
+    Account passenger = new Account(passengerId, AccountType.PASSENGER);
+    passenger.credit(
+      fareEach.multiply(BigDecimal.valueOf(threadCount))
+    );
+
+    accountRepo.save(passenger);
 
     ExecutorService executor = Executors.newFixedThreadPool(threadCount);
     CountDownLatch startGate = new CountDownLatch(1);
@@ -127,6 +146,13 @@ public class LedgerServiceConcurrencyTest {
     String reservaId = "idempotent-reserva-001";
     BigDecimal fare  = new BigDecimal("5000.00");
 
+    // Fondear pasajero
+    Account passenger =
+      new Account(passengerId, AccountType.PASSENGER);
+
+    passenger.credit(fare);
+    accountRepo.save(passenger);
+
     // Simular que kafka entrega 3 veces el mismo evento
     ledgerService.processTrip(reservaId, passengerId, driverId, fare);
     ledgerService.processTrip(reservaId, passengerId, driverId, fare);
@@ -134,7 +160,7 @@ public class LedgerServiceConcurrencyTest {
 
     // El balance del chofer debe ser como si solo se procesó una vez.
     BigDecimal driverBalance    = ledgerService.getBalance(driverId, true);
-    BigDecimal expectedBalance  = fare.multiply(new BigDecimal("0.80"));
+    BigDecimal expectedBalance  = fare.multiply(new BigDecimal("0.50"));
 
     assertThat(driverBalance)
       .as("Idempotencia rota — el balance se triplicó")

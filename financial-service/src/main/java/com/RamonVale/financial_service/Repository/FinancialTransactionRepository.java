@@ -49,5 +49,4 @@ public interface FinancialTransactionRepository extends JpaRepository<FinancialT
     @Param("desde") Instant desde,
     @Param("hasta") Instant hasta);
 
-  BigDecimal sumByEntryTypeAndPeriod(EntryType entryType, Instant startOfDay, Instant endOfDay);
 }
