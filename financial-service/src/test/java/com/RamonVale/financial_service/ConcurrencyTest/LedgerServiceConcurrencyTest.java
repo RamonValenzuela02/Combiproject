@@ -166,5 +166,5 @@ public class LedgerServiceConcurrencyTest {
       .as("Idempotencia rota — el balance se triplicó")
       .isEqualByComparingTo(expectedBalance);
   }
-  
+
 }
