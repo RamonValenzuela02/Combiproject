@@ -10,10 +10,12 @@ resilience4j:
   retry:
     instances:
       ledgerRetry:
-        max-attempts: 3
+        max-attempts: 20
         wait-duration: 50ms
         retry-exceptions:
           - jakarta.persistence.OptimisticLockException
+          - org.springframework.orm.ObjectOptimisticLockingFailureException
+          - org.hibernate.StaleObjectStateException
 eureka:
   client:
     enabled: false

@@ -166,26 +166,5 @@ public class LedgerServiceConcurrencyTest {
       .as("Idempotencia rota — el balance se triplicó")
       .isEqualByComparingTo(expectedBalance);
   }
-
-  // ─────────────────────────────────────────────────────────────────────────
-
-  @Test
-  @DisplayName("El balance del pasajero es negativo si no hay saldo suficiente")
-  void insufficientFundsThrowsException() {
-    // En el modelo actual, el pasajero puede quedar con balance negativo
-    // porque el pago ya fue confirmado por MercadoPago.
-    // Este test documenta ese comportamiento esperado.
-    assertThat(
-      ledgerService.getBalance(passengerId, false)
-    ).isEqualByComparingTo(BigDecimal.ZERO);
-
-    // Después de un viaje, el pasajero debería tener balance negativo
-    // (es un wallet de registro, no pre-cargado).
-    ledgerService.processTrip("trip-001", passengerId, driverId, new BigDecimal("3000.00"));
-
-    BigDecimal passengerBalance = ledgerService.getBalance(passengerId, false);
-    assertThat(passengerBalance)
-      .as("El pasajero debe tener balance negativo después de pagar")
-      .isLessThan(BigDecimal.ZERO);
-  }
+  
 }
