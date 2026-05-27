@@ -38,6 +38,7 @@ public class ReconciliationReport {
 
   // Diferencia absoluta: abs(totalDebits - totalCredits).
   // En un sistema sano, drift == 0. Cualquier valor > 0 indica problema.
+  @Getter
   @Column(nullable = false, precision = 19, scale = 4)
   private BigDecimal drift;
 
@@ -65,10 +66,6 @@ public class ReconciliationReport {
 
   public boolean isBalanced() {
     return this.status == Status.OK;
-  }
-
-  public BigDecimal getDrift() {
-    return drift;
   }
 
   public boolean hasDriftAbove(BigDecimal threshold) {

@@ -10,7 +10,8 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.List;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,14 +19,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 public class ReconciliationReportService {
 
-  private static final Logger log = LoggerFactory.getLogger(ReconciliationRepService.class);
+  private static final Logger log = LoggerFactory.getLogger(ReconciliationReportService.class);
   private static final BigDecimal ALERT_THRESHOLD = new BigDecimal("0.01");
   private static final String EXCHANGE = "smartcombi.exchange";
   private static final String ROUTING_KEY_ALERT = "reconciliation.alert";
 
   private ReconciliationReportRepository reportRepo;
   private FinancialTransactionRepository financialTransactionRepo;
-//  private final RabbitTemplate                 rabbitTemplate;
 
   public ReconciliationReportService(ReconciliationReportRepository reportRepo,
                                FinancialTransactionRepository financialTransactionRepo) {
@@ -73,7 +73,7 @@ public class ReconciliationReportService {
     return report;
   }
 
-  // ── Consulta de reportes (RF-FIN-07) ─────────────────────────────────────
+  // ── Consulta de reportes
   @Transactional(readOnly = true)
   public List<ReconciliationReport> getLast30Reports() {
     return reportRepo.findAllByOrderByDateDesc(PageRequest.of(0, 30));

@@ -1,5 +1,7 @@
 package com.RamonVale.financial_service.ConcurrencyTest;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.RamonVale.financial_service.Repository.AccountRepository;
 import com.RamonVale.financial_service.Service.LedgerService;
 import java.math.BigDecimal;
@@ -25,7 +27,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Testcontainers
 public class LedgerServiceConcurrencyTest {
   @Container
-  static MySQLContainer<?> postgres = new MySQLContainer<>("mysql:8.0")
+  static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:8.0")
     .withDatabaseName("smartcombi_test")
     .withUsername("test")
     .withPassword("test");
